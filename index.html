@@ -80,7 +80,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 36px 72px;
+      padding: 28px 72px;
       border-bottom: 1px solid rgba(201,169,110,0.1);
       position: relative;
       z-index: 20;
@@ -89,13 +89,27 @@
     }
 
     .nav-logo {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 16px;
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      color: var(--cream);
-      text-transform: uppercase;
       text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-logo-img {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+
+    @media (max-width: 1024px) {
+      .nav-logo-img { height: 32px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-logo-img { height: 30px; }
+    }
+
+    @media (max-width: 480px) {
+      .nav-logo-img { height: 26px; }
     }
 
     .nav-right {
@@ -481,7 +495,7 @@
 
     /* ─── RESPONSIVE: 1024px ─── */
     @media (max-width: 1024px) {
-      .nav { padding: 28px 48px; }
+      .nav { padding: 24px 48px; }
       .hero { padding: 0 48px; }
       .left-col { padding: 56px 60px 56px 0; }
       .right-col { padding: 56px 0 56px 60px; gap: 40px; }
@@ -896,7 +910,9 @@
 
     <!-- Navigation -->
     <nav class="nav">
-      <a href="/" class="nav-logo">Alnair</a>
+      <a href="/" class="nav-logo">
+        <img src="alnair-logo-web.png" alt="Alnair" class="nav-logo-img">
+      </a>
       <div class="nav-right">
         <ul class="nav-links">
           <li><a href="#hero">Top</a></li>
