@@ -25,6 +25,10 @@
       box-sizing: border-box;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     html, body {
       height: 100%;
     }
@@ -768,31 +772,69 @@
     /* ─── TRUST ROW ─── */
     .svc-trust {
       display: flex;
-      border-top: 1px solid rgba(201,169,110,0.15);
+      border-top: 1px solid rgba(201,169,110,0.25);
+      background: rgba(201,169,110,0.05);
     }
 
     .svc-trust-item {
       flex: 1;
-      padding: 20px 28px;
+      padding: 22px 28px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      font-weight: 300;
-      letter-spacing: 0.18em;
-      color: var(--cream-dim);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      color: var(--cream);
     }
 
     .svc-trust-item + .svc-trust-item {
-      border-left: 1px solid rgba(201,169,110,0.15);
+      border-left: 1px solid rgba(201,169,110,0.2);
     }
 
     .svc-trust-icon {
       color: var(--gold);
-      font-size: 8px;
+      font-size: 10px;
       flex-shrink: 0;
-      opacity: 0.75;
+    }
+
+    /* ─── BACK TO TOP ─── */
+    .back-to-top {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      width: 48px;
+      height: 48px;
+      background: var(--bg);
+      border: 1px solid rgba(201,169,110,0.3);
+      color: var(--gold);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.3s, background 0.3s;
+      pointer-events: none;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .back-to-top:hover {
+      background: rgba(201,169,110,0.08);
+      border-color: rgba(201,169,110,0.6);
+    }
+
+    @media (max-width: 480px) {
+      .back-to-top { bottom: 24px; right: 20px; width: 42px; height: 42px; font-size: 14px; }
     }
 
     @media (max-width: 1024px) {
@@ -827,6 +869,7 @@
   <!-- Mobile Navigation Overlay -->
   <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="ナビゲーション">
     <button class="mobile-nav-close" id="mobile-nav-close" aria-label="メニューを閉じる">✕</button>
+    <a href="#hero" class="mobile-nav-link">Top</a>
     <a href="#about" class="mobile-nav-link">About</a>
     <a href="#service" class="mobile-nav-link">Service</a>
     <a href="#contact" class="mobile-nav-cta mobile-nav-link">お問い合わせ</a>
@@ -839,6 +882,7 @@
       <a href="/" class="nav-logo">Alnair</a>
       <div class="nav-right">
         <ul class="nav-links">
+          <li><a href="#hero">Top</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#service">Service</a></li>
         </ul>
@@ -930,7 +974,7 @@
             <div>
               <div class="svc-card-tag">Monthly Advisory</div>
               <h3 class="svc-card-name">月額AIアドバイザリー</h3>
-              <div class="svc-card-price">月額 ¥<span class="count-up" data-target="50000">50,000</span>〜</div>
+              <div class="svc-card-price">¥<span class="count-up" data-target="50000">50,000</span>/月〜</div>
             </div>
             <ul class="svc-list">
               <li>現場の課題ヒアリング</li>
@@ -959,19 +1003,22 @@
         <!-- 安心ポイント -->
         <div class="svc-trust scroll-reveal" style="--reveal-delay:0.28s">
           <div class="svc-trust-item">
-            <span class="svc-trust-icon">◇</span>最短1週間で納品
+            <span class="svc-trust-icon">◆</span>最短1週間で納品
           </div>
           <div class="svc-trust-item">
-            <span class="svc-trust-icon">◇</span>初回相談無料
+            <span class="svc-trust-icon">◆</span>初回相談無料
           </div>
           <div class="svc-trust-item">
-            <span class="svc-trust-icon">◇</span>契約縛りなし
+            <span class="svc-trust-icon">◆</span>契約縛りなし
           </div>
         </div>
 
       </div>
     </div>
   </section>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="back-to-top" aria-label="ページトップへ戻る">↑</button>
 
   <script>
     // ─── STAR FIELD GENERATION ───
@@ -1055,7 +1102,7 @@
     // ─── COUNT UP ───
     function runCountUp(el) {
       const target = parseInt(el.dataset.target, 10);
-      const duration = 1600;
+      const duration = 700;
       const startTime = performance.now();
       function step(now) {
         const p = Math.min((now - startTime) / duration, 1);
@@ -1079,6 +1126,15 @@
     );
 
     document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+
+    // ─── BACK TO TOP ───
+    const backToTop = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
 </body>
 </html>
