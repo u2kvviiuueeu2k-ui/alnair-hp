@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alnair — AI Advisory</title>
+  <meta name="description" content="月額AI顧問と業務ツール開発を通じて、貴社の意思決定に本物の知性を。合同会社Alnair。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Noto+Serif+JP:wght@200;300&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0c0c0a;
+      --cream: #f0ebe0;
+      --cream-dim: rgba(240,235,224,0.55);
+      --cream-faint: rgba(240,235,224,0.15);
+      --gold: #c9a96e;
+      --gold-dim: rgba(201,169,110,0.35);
+      --gold-faint: rgba(201,169,110,0.12);
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ─── STAR FIELD ─── */
+    .star-field {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: var(--cream);
+      border-radius: 50%;
+      animation: twinkle var(--dur, 4s) ease-in-out infinite var(--delay, 0s);
+    }
+
+    @keyframes twinkle {
+      0%, 100% {
+        opacity: var(--lo, 0.12);
+        transform: scale(1);
+      }
+      50% {
+        opacity: var(--hi, 0.45);
+        transform: scale(var(--scale-hi, 1.2));
+      }
+    }
+
+    /* ─── PAGE WRAPPER ─── */
+    .page-wrapper {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+    }
+
+    /* ─── NAVIGATION ─── */
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 36px 72px;
+      border-bottom: 1px solid rgba(201,169,110,0.1);
+      position: relative;
+      z-index: 20;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both 0.1s;
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: 0.3em;
+      color: var(--cream);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--cream-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--cream); }
+
+    .nav-cta {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      text-decoration: none;
+      text-transform: uppercase;
+      border: 1px solid var(--gold-dim);
+      padding: 10px 22px;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-faint);
+      border-color: var(--gold);
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--cream-dim);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+    /* Mobile nav overlay */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(12,12,10,0.97);
+      z-index: 50;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 52px;
+    }
+
+    .mobile-nav.open { display: flex; }
+
+    .mobile-nav a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--cream-dim);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .mobile-nav a:hover { color: var(--cream); }
+
+    .mobile-nav-cta {
+      font-family: 'DM Sans', sans-serif !important;
+      font-size: 12px !important;
+      letter-spacing: 0.2em !important;
+      color: var(--gold) !important;
+      border: 1px solid var(--gold-dim);
+      padding: 12px 28px;
+      margin-top: 8px;
+    }
+
+    .mobile-nav-close {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      background: none;
+      border: none;
+      color: var(--cream-dim);
+      font-size: 20px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.1em;
+      padding: 4px;
+      transition: color 0.3s;
+    }
+
+    .mobile-nav-close:hover { color: var(--cream); }
+
+    /* ─── HERO CONTENT ─── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 72px;
+    }
+
+    .left-col {
+      padding: 64px 80px 64px 0;
+      border-right: 1px solid rgba(201,169,110,0.15);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .right-col {
+      padding: 64px 0 64px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 48px;
+    }
+
+    /* ─── LEFT COLUMN ─── */
+    .tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both 0.45s;
+    }
+
+    .big-tagline {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 52px;
+      font-weight: 200;
+      line-height: 1.65;
+      color: var(--cream);
+      letter-spacing: 0.06em;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both 0.65s;
+    }
+
+    .big-tagline em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .tagline-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-weight: 300;
+      font-style: italic;
+      letter-spacing: 0.12em;
+      color: var(--cream-dim);
+      margin-top: 32px;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both 0.9s;
+    }
+
+    /* ─── RIGHT COLUMN ─── */
+    .star-mark {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .star-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 144px;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(201,169,110,0.3);
+      line-height: 1;
+      display: block;
+      user-select: none;
+      animation:
+        alnairFill 3.2s cubic-bezier(0.16,1,0.3,1) both 0.55s,
+        alnairPulse 6s ease-in-out infinite 3.75s;
+    }
+
+    /* ─── ALNAIR FILL ANIMATION ─── */
+    @keyframes alnairFill {
+      0% {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(201,169,110,0.04);
+        text-shadow: none;
+        filter: blur(3px);
+        opacity: 0;
+      }
+      8% {
+        opacity: 1;
+        filter: blur(0px);
+        -webkit-text-stroke: 1px rgba(201,169,110,0.15);
+      }
+      28% {
+        color: transparent;
+        -webkit-text-stroke: 1.5px rgba(201,169,110,0.75);
+        text-shadow: 0 0 20px rgba(201,169,110,0.15);
+      }
+      52% {
+        color: rgba(201,169,110,0.52);
+        -webkit-text-stroke: 1px rgba(201,169,110,1);
+        text-shadow:
+          0 0 40px rgba(201,169,110,0.45),
+          0 0 90px rgba(201,169,110,0.18),
+          0 0 160px rgba(201,169,110,0.08);
+        filter: blur(0px);
+      }
+      75% {
+        color: rgba(201,169,110,0.6);
+        -webkit-text-stroke: 1px rgba(201,169,110,0.9);
+        text-shadow:
+          0 0 50px rgba(201,169,110,0.5),
+          0 0 100px rgba(201,169,110,0.2);
+      }
+      100% {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(201,169,110,0.28);
+        text-shadow: none;
+        filter: blur(0px);
+        opacity: 1;
+      }
+    }
+
+    /* ─── ALNAIR PULSE ANIMATION (constant star glow) ─── */
+    @keyframes alnairPulse {
+      0%, 100% {
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(201,169,110,0.28);
+        text-shadow: none;
+      }
+      50% {
+        color: rgba(201,169,110,0.10);
+        -webkit-text-stroke: 1px rgba(201,169,110,0.60);
+        text-shadow:
+          0 0 28px rgba(201,169,110,0.22),
+          0 0 64px rgba(201,169,110,0.08);
+      }
+    }
+
+    .star-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 2.1;
+      color: var(--cream-dim);
+      letter-spacing: 0.08em;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both 0.75s;
+    }
+
+    .services {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      border-top: 1px solid rgba(201,169,110,0.12);
+      padding-top: 32px;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both 1.05s;
+    }
+
+    .service-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--cream-dim);
+    }
+
+    .service-item::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--gold-dim);
+      flex-shrink: 0;
+    }
+
+    /* ─── BOTTOM BAR ─── */
+    .bottom-bar {
+      padding: 28px 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(201,169,110,0.08);
+      position: relative;
+      z-index: 2;
+      opacity: 0;
+      animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both 1.3s;
+    }
+
+    .constellation-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.3em;
+      color: var(--cream-faint);
+      text-transform: uppercase;
+    }
+
+    .scroll-ind {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--cream-dim);
+      text-transform: uppercase;
+    }
+
+    .scroll-ind::after {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--gold-dim);
+      transition: width 0.4s;
+    }
+
+    .scroll-ind:hover::after { width: 60px; }
+
+    /* ─── BASE ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition:
+        opacity 0.85s cubic-bezier(0.16,1,0.3,1) var(--reveal-delay, 0s),
+        transform 0.85s cubic-bezier(0.16,1,0.3,1) var(--reveal-delay, 0s);
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE: 1024px ─── */
+    @media (max-width: 1024px) {
+      .nav { padding: 28px 48px; }
+      .hero { padding: 0 48px; }
+      .left-col { padding: 56px 60px 56px 0; }
+      .right-col { padding: 56px 0 56px 60px; gap: 40px; }
+      .big-tagline { font-size: 44px; }
+      .star-name { font-size: 117px; }
+      .bottom-bar { padding: 24px 48px; }
+    }
+
+    /* ─── RESPONSIVE: 768px (tablet) ─── */
+    @media (max-width: 768px) {
+      .nav {
+        padding: 24px 28px;
+      }
+
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+      .hamburger { display: flex; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 0 28px;
+      }
+
+      .left-col {
+        padding: 52px 0 44px 0;
+        border-right: none;
+        border-bottom: 1px solid rgba(201,169,110,0.15);
+      }
+
+      .right-col {
+        padding: 44px 0 52px 0;
+        gap: 36px;
+      }
+
+      .tag { margin-bottom: 28px; }
+
+      .big-tagline {
+        font-size: 34px;
+        line-height: 1.7;
+      }
+
+      .tagline-en { font-size: 14px; margin-top: 24px; }
+
+      .star-name { font-size: 96px; }
+
+      .services { padding-top: 28px; }
+
+      .bottom-bar {
+        padding: 20px 28px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+      }
+
+      .scroll-ind { justify-content: center; }
+    }
+
+    /* ─── RESPONSIVE: 480px (mobile) ─── */
+    @media (max-width: 480px) {
+      .nav { padding: 20px 20px; }
+
+      .big-tagline { font-size: 28px; }
+      .star-name { font-size: 78px; }
+      .star-desc { font-size: 12px; }
+
+      .hero { padding: 0 20px; }
+      .left-col { padding: 44px 0 36px 0; }
+      .right-col { padding: 36px 0 44px 0; }
+      .bottom-bar { padding: 18px 20px; }
+    }
+
+    /* ─── ABOUT SECTION ─── */
+    .about-section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 72px;
+      border-top: 1px solid rgba(201,169,110,0.08);
+      background: var(--bg);
+    }
+
+    .about-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .about-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--cream);
+      margin-bottom: 52px;
+    }
+
+    .about-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .about-table tr {
+      border-bottom: 1px solid rgba(201,169,110,0.1);
+    }
+
+    .about-table tr:first-child {
+      border-top: 1px solid rgba(201,169,110,0.1);
+    }
+
+    .about-table th {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      padding: 22px 0;
+      width: 130px;
+      text-align: left;
+      vertical-align: middle;
+    }
+
+    .about-table td {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 16px;
+      font-weight: 200;
+      color: var(--cream);
+      padding: 22px 0;
+      letter-spacing: 0.06em;
+      vertical-align: middle;
+    }
+
+    @media (max-width: 1024px) {
+      .about-section { padding: 80px 48px; }
+    }
+
+    @media (max-width: 768px) {
+      .about-section { padding: 72px 28px; }
+      .about-title { font-size: 28px; margin-bottom: 40px; }
+      .about-table th { width: 100px; }
+      .about-table td { font-size: 15px; }
+    }
+
+    @media (max-width: 480px) {
+      .about-section { padding: 60px 20px; }
+      .about-table td { font-size: 14px; }
+    }
+
+    /* ─── SERVICE SECTION ─── */
+    .service-section {
+      position: relative;
+      z-index: 1;
+      padding: 100px 72px;
+      border-top: 1px solid rgba(201,169,110,0.08);
+      background: var(--bg);
+    }
+
+    .service-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .service-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .service-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      color: var(--cream);
+      margin-bottom: 40px;
+    }
+
+    .svc-wrapper {
+      border: 1px solid rgba(201,169,110,0.15);
+    }
+
+    .svc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(201,169,110,0.15);
+    }
+
+    .svc-card {
+      background: var(--bg);
+      padding: 52px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      position: relative;
+      transition: background 0.6s ease;
+    }
+
+    .svc-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid transparent;
+      pointer-events: none;
+      transition: border-color 0.7s ease, box-shadow 0.7s ease;
+    }
+
+    .svc-card:hover { background: rgba(201,169,110,0.025); }
+
+    .svc-card:hover::after {
+      border-color: rgba(201,169,110,0.42);
+      box-shadow:
+        inset 0 0 50px rgba(201,169,110,0.04),
+        0 0 40px rgba(201,169,110,0.06);
+    }
+
+    .svc-card-tag {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px;
+      font-weight: 300;
+      letter-spacing: 0.38em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .svc-card-name {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 22px;
+      font-weight: 200;
+      color: var(--cream);
+      letter-spacing: 0.06em;
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+
+    .svc-card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-top: 10px;
+    }
+
+    .svc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      border-top: 1px solid rgba(201,169,110,0.1);
+      padding-top: 28px;
+    }
+
+    .svc-list li {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--cream-dim);
+      letter-spacing: 0.07em;
+      line-height: 1.75;
+      padding-left: 22px;
+      position: relative;
+    }
+
+    .svc-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 10px;
+      height: 1px;
+      background: var(--gold-dim);
+    }
+
+    /* ─── TRUST ROW ─── */
+    .svc-trust {
+      display: flex;
+      border-top: 1px solid rgba(201,169,110,0.15);
+    }
+
+    .svc-trust-item {
+      flex: 1;
+      padding: 20px 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--cream-dim);
+    }
+
+    .svc-trust-item + .svc-trust-item {
+      border-left: 1px solid rgba(201,169,110,0.15);
+    }
+
+    .svc-trust-icon {
+      color: var(--gold);
+      font-size: 8px;
+      flex-shrink: 0;
+      opacity: 0.75;
+    }
+
+    @media (max-width: 1024px) {
+      .service-section { padding: 80px 48px; }
+    }
+
+    @media (max-width: 768px) {
+      .service-section { padding: 72px 28px; }
+      .service-title { font-size: 28px; margin-bottom: 40px; }
+      .svc-grid { grid-template-columns: 1fr; }
+      .svc-card { padding: 44px 32px; }
+      .svc-trust { flex-direction: column; }
+      .svc-trust-item + .svc-trust-item {
+        border-left: none;
+        border-top: 1px solid rgba(201,169,110,0.15);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .service-section { padding: 60px 20px; }
+      .svc-card { padding: 36px 24px; }
+      .svc-card-name { font-size: 19px; }
+      .svc-card-price { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Star Field -->
+  <div class="star-field" id="star-field" aria-hidden="true"></div>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="ナビゲーション">
+    <button class="mobile-nav-close" id="mobile-nav-close" aria-label="メニューを閉じる">✕</button>
+    <a href="#about" class="mobile-nav-link">About</a>
+    <a href="#service" class="mobile-nav-link">Service</a>
+    <a href="#contact" class="mobile-nav-cta mobile-nav-link">お問い合わせ</a>
+  </div>
+
+  <div class="page-wrapper">
+
+    <!-- Navigation -->
+    <nav class="nav">
+      <a href="/" class="nav-logo">Alnair</a>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#service">Service</a></li>
+        </ul>
+        <a href="#contact" class="nav-cta">お問い合わせ</a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="メニューを開く" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="hero" id="hero">
+
+      <!-- Left Column -->
+      <div class="left-col">
+        <div class="tag">月額 AI 顧問 ＋ 業務ツール開発</div>
+        <h1 class="big-tagline">
+          知らないまま<br>
+          <em>終わらせない。</em>
+        </h1>
+        <p class="tagline-en">Not a shooting star — a fixed star.</p>
+      </div>
+
+      <!-- Right Column -->
+      <div class="right-col">
+        <div class="star-mark">
+          <span class="star-name" aria-label="Alnair">Alnair</span>
+          <p class="star-desc">
+            アラビア語で「明るいもの」。<br>
+            流れ星ではなく、恒星として。<br>
+            貴社のAI戦略を、本物の光で照らす。
+          </p>
+        </div>
+
+        <div class="services">
+          <div class="service-item">月額AIアドバイザリー</div>
+          <div class="service-item">業務自動化ツール開発</div>
+          <div class="service-item">AI活用戦略コンサルティング</div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Bottom Bar -->
+    <footer class="bottom-bar">
+<div class="scroll-ind">Scroll to explore</div>
+    </footer>
+
+  </div>
+
+  <!-- Company Overview Section -->
+  <section id="about" class="about-section">
+    <div class="about-inner scroll-reveal">
+      <div class="about-label">Company</div>
+      <h2 class="about-title">会社概要</h2>
+      <table class="about-table">
+        <tr>
+          <th>社名</th>
+          <td>合同会社Alnair</td>
+        </tr>
+        <tr>
+          <th>代表</th>
+          <td>水谷勇介</td>
+        </tr>
+        <tr>
+          <th>設立</th>
+          <td>2026年4月</td>
+        </tr>
+        <tr>
+          <th>所在地</th>
+          <td>東京都小平市</td>
+        </tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- Service Section -->
+  <section id="service" class="service-section">
+    <div class="service-inner">
+      <div class="service-label scroll-reveal">Service</div>
+      <h2 class="service-title scroll-reveal">サービス</h2>
+      <div class="svc-wrapper">
+        <div class="svc-grid">
+
+          <!-- 月額AIアドバイザリー -->
+          <div class="svc-card scroll-reveal" style="--reveal-delay:0s">
+            <div>
+              <div class="svc-card-tag">Monthly Advisory</div>
+              <h3 class="svc-card-name">月額AIアドバイザリー</h3>
+              <div class="svc-card-price">月額 ¥<span class="count-up" data-target="50000">50,000</span>〜</div>
+            </div>
+            <ul class="svc-list">
+              <li>現場の課題ヒアリング</li>
+              <li>AI活用戦略の立案・提案</li>
+              <li>月次レポート・定例MTG</li>
+              <li>業務改善の継続サポート</li>
+            </ul>
+          </div>
+
+          <!-- ツール・サイト開発 -->
+          <div class="svc-card scroll-reveal" style="--reveal-delay:0.15s">
+            <div>
+              <div class="svc-card-tag">Development</div>
+              <h3 class="svc-card-name">ツール・サイト開発</h3>
+              <div class="svc-card-price">別途お見積もり</div>
+            </div>
+            <ul class="svc-list">
+              <li>現場の声から課題を抽出し、最速で形にします。</li>
+              <li>「こんなことできる？」から始めてください。</li>
+              <li>予約システム・自動化ツール・HPなど</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- 安心ポイント -->
+        <div class="svc-trust scroll-reveal" style="--reveal-delay:0.28s">
+          <div class="svc-trust-item">
+            <span class="svc-trust-icon">◇</span>最短1週間で納品
+          </div>
+          <div class="svc-trust-item">
+            <span class="svc-trust-icon">◇</span>初回相談無料
+          </div>
+          <div class="svc-trust-item">
+            <span class="svc-trust-icon">◇</span>契約縛りなし
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // ─── STAR FIELD GENERATION ───
+    (function () {
+      const field = document.getElementById('star-field');
+      const isMobile = window.innerWidth < 768;
+      const count = isMobile ? 65 : 110;
+
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+
+        const roll = Math.random();
+        const size = roll < 0.10 ? 2.8 : roll < 0.38 ? 1.8 : 1;
+        const dur = 3 + Math.random() * 6;
+        const delay = -(Math.random() * 9);
+        const lo = 0.15 + Math.random() * 0.15;
+        const hi = 0.45 + Math.random() * 0.45;
+        const scaleHi = size > 1.8 ? 1.45 : 1.25;
+
+        star.style.cssText = [
+          `left:${(Math.random() * 100).toFixed(2)}%`,
+          `top:${(Math.random() * 100).toFixed(2)}%`,
+          `width:${size}px`,
+          `height:${size}px`,
+          `--dur:${dur.toFixed(2)}s`,
+          `--delay:${delay.toFixed(2)}s`,
+          `--lo:${lo.toFixed(3)}`,
+          `--hi:${hi.toFixed(3)}`,
+          `--scale-hi:${scaleHi}`,
+        ].join(';');
+
+        field.appendChild(star);
+      }
+    })();
+
+    // ─── HAMBURGER MENU ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileNavClose = document.getElementById('mobile-nav-close');
+    const mobileNavLinks = mobileNav.querySelectorAll('.mobile-nav-link');
+
+    function openMenu() {
+      mobileNav.classList.add('open');
+      hamburger.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      mobileNav.classList.remove('open');
+      hamburger.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', openMenu);
+    mobileNavClose.addEventListener('click', closeMenu);
+    mobileNavLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+    // Close on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && mobileNav.classList.contains('open')) closeMenu();
+    });
+
+    // ─── SCROLL REVEAL ───
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -24px 0px' }
+    );
+
+    document.querySelectorAll('.scroll-reveal').forEach(el => revealObserver.observe(el));
+
+    // ─── COUNT UP ───
+    function runCountUp(el) {
+      const target = parseInt(el.dataset.target, 10);
+      const duration = 1600;
+      const startTime = performance.now();
+      function step(now) {
+        const p = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.floor(eased * target).toLocaleString('ja-JP');
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    const countObserver = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            runCountUp(entry.target);
+            countObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+  </script>
+</body>
+</html>
