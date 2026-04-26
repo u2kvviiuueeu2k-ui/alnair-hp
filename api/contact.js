@@ -26,7 +26,7 @@ module.exports = async function handler(req, res) {
     const { error } = await resend.emails.send({
       // 送信元ドメインを取得後は noreply@yourdomain.com に変更してください
       from: 'Alnair <onboarding@resend.dev>',
-      to: 'alnair.llc.info@gmail.com',
+      to: 'u2kvviiuueeu2k@gmail.com',
       replyTo: email,
       subject: `【お問い合わせ】${escapeHtml(name)}様より`,
       html: `
