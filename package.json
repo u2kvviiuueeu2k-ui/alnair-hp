@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "build": "echo 'no build step'"
+  },
+  "dependencies": {
+    "resend": "^6.12.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1"
+  }
+}
