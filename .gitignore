@@ -4,3 +4,5 @@ screenshots/
 screenshot.js
 package.json
 package-lock.json
+.env.local
+.claude/
