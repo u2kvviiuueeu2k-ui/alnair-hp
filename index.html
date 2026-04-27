@@ -24,7 +24,7 @@
             <a href="#hero">Top</a>
             <a href="#about">About</a>
             <a href="#service">Service</a>
-            <a href="contact" class="cta-button magnetic">お問い合わせ</a>
+            <a href="contact">Contact</a>
         </div>
     </nav>
 
@@ -155,6 +155,27 @@
                 ease: "power4.out"
             });
         });
+
+        // --- Shimmer on h1 (one-shot gold sweep after reveal) ---
+        const h1El = document.querySelector('h1');
+        if (h1El) {
+            const h1Chars = h1El.querySelectorAll('.char');
+            gsap.timeline({ delay: 2 })
+                .to(h1Chars, {
+                    color: '#D4AF37',
+                    textShadow: '0 0 22px rgba(212,175,55,0.9)',
+                    stagger: 0.045,
+                    duration: 0.15,
+                    ease: 'power2.out',
+                })
+                .to(h1Chars, {
+                    color: '#F8F9FA',
+                    textShadow: '0 0 0px rgba(212,175,55,0)',
+                    stagger: 0.03,
+                    duration: 0.55,
+                    ease: 'power2.inOut',
+                }, '+=0.05');
+        }
 
         // Scroll Trigger Reveal
         document.querySelectorAll('section').forEach(section => {
