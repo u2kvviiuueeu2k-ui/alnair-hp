@@ -156,25 +156,29 @@
             });
         });
 
-        // --- Shimmer on h1 (one-shot gold sweep after reveal) ---
+        // --- Permanent gold glow on「終わらせない」---
         const h1El = document.querySelector('h1');
         if (h1El) {
-            const h1Chars = h1El.querySelectorAll('.char');
-            gsap.timeline({ delay: 2 })
-                .to(h1Chars, {
+            const target = '終わらせない';
+            const allChars = Array.from(h1El.querySelectorAll('.char'));
+            const glowChars = [];
+            let ti = 0;
+            for (const ch of allChars) {
+                if (ti < target.length && ch.textContent === target[ti]) {
+                    glowChars.push(ch);
+                    ti++;
+                }
+            }
+            if (glowChars.length === target.length) {
+                gsap.to(glowChars, {
                     color: '#D4AF37',
-                    textShadow: '0 0 22px rgba(212,175,55,0.9)',
-                    stagger: 0.045,
-                    duration: 0.15,
+                    textShadow: '0 0 18px rgba(212,175,55,0.7)',
+                    delay: 1.8,
+                    duration: 0.8,
+                    stagger: 0.06,
                     ease: 'power2.out',
-                })
-                .to(h1Chars, {
-                    color: '#F8F9FA',
-                    textShadow: '0 0 0px rgba(212,175,55,0)',
-                    stagger: 0.03,
-                    duration: 0.55,
-                    ease: 'power2.inOut',
-                }, '+=0.05');
+                });
+            }
         }
 
         // Scroll Trigger Reveal
