@@ -120,12 +120,15 @@ nav {
 }
 
 .logo {
-    font-size: 1.5rem;
-    color: var(--accent-gold);
     text-decoration: none;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-shadow: 0 0 10px var(--accent-gold-glow);
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 38px;
+    width: auto;
+    display: block;
 }
 
 .nav-links {
