@@ -374,10 +374,126 @@ h1 {
     }
 }
 
+/* Company Section */
+.company-card-top {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+    padding: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    transition: var(--transition-smooth);
+}
+
+.company-card-top:hover {
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.05);
+}
+
+.company-grid-top {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    row-gap: 1.8rem;
+    column-gap: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.8;
+    align-items: start;
+}
+
+.cg-label {
+    color: var(--accent-gold);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+}
+
+.cg-value {
+    color: var(--text-primary);
+}
+
+.cg-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.cg-list li {
+    position: relative;
+    padding-left: 1.2rem;
+    margin-bottom: 0.4rem;
+    color: var(--text-secondary);
+}
+
+.cg-list li:last-child {
+    margin-bottom: 0;
+}
+
+.cg-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--accent-gold);
+    font-size: 0.75rem;
+}
+
+.company-pdf-cta {
+    border-top: 1px solid var(--glass-border);
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.pdf-info p.pdf-tag {
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    letter-spacing: 0.2em;
+    margin-bottom: 0.3rem;
+}
+
+.pdf-info h4 {
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 0.3rem;
+}
+
+.pdf-info p:last-child {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.pdf-download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+    transition: var(--transition-smooth);
+    white-space: nowrap;
+    border-radius: 2px;
+}
+
+.pdf-download-btn:hover {
+    background: var(--accent-gold);
+    color: var(--bg-color);
+    box-shadow: 0 0 25px var(--accent-gold-glow);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     h1 { font-size: 3rem; }
     .about-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
     section { padding: 5rem 5%; }
+    .company-card-top { padding: 2rem 1.5rem; }
+    .company-grid-top { grid-template-columns: 1fr; row-gap: 1.2rem; }
+    .company-pdf-cta { flex-direction: column; align-items: flex-start; }
 }
