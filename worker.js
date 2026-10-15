@@ -128,6 +128,14 @@ export default {
       return handleContact(request, env);
     }
 
+    // Google Search Console 所有権確認ファイル。assets の auto-trailing-slash が
+    // /xxx.html を拡張子なしへ307リダイレクトしてしまうため、この1パスだけ直接200で返す。
+    if (url.pathname === '/google4db3adf192dd13c0.html') {
+      return new Response('google-site-verification: google4db3adf192dd13c0.html', {
+        headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' },
+      });
+    }
+
     return env.ASSETS.fetch(request);
   },
 };

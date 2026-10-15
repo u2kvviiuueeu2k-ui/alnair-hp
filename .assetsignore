@@ -10,3 +10,17 @@ node_modules
 api
 .env
 .env.*
+
+# 2026-09-05 追加: ビルド生成物・依存・秘匿ファイルの除外
+**/node_modules/**
+.next
+**/.next/**
+.wrangler
+**/.wrangler/**
+*.pack
+**/*.pack
+*.pack.gz
+**/*.pack.gz
+.dev.vars
+*.log
+**/.git/**

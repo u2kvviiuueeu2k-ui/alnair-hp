@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://alnair-hp.webprod-alnair.workers.dev/sitemap.xml

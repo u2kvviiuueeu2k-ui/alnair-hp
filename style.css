@@ -497,3 +497,46 @@ h1 {
     .company-grid-top { grid-template-columns: 1fr; row-gap: 1.2rem; }
     .company-pdf-cta { flex-direction: column; align-items: flex-start; }
 }
+
+/* 日本語が単語の途中で折り返されるのを防ぐ（2026-09-16）
+   「月額AIアド／バイザリー」のように語中で割れていた */
+h1, h2, h3, p, li, .card-title, .price, .hero-title, .work-title, .work-sub {
+  word-break: normal;
+  overflow-wrap: anywhere;
+  line-break: strict;
+}
+h1, h2, h3, .card-title { text-wrap: balance; }
+
+/* 実績・デモの一覧（2026-09-16） */
+.work-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px}
+.work-card{display:flex; flex-direction:column; gap:5px; padding:18px 18px 20px;
+  border:1px solid rgba(255,255,255,.14); border-radius:10px; text-decoration:none;
+  background:rgba(255,255,255,.03); transition:.25s}
+.work-card:hover{border-color:var(--accent-gold); background:rgba(255,255,255,.06);
+  transform:translateY(-2px)}
+.work-badge{font-size:.6rem; letter-spacing:.16em; color:var(--accent-gold);
+  font-family:ui-monospace, monospace}
+.work-title{font-size:1rem; color:var(--text-primary); line-height:1.6}
+.work-sub{font-size:.8rem; color:var(--text-secondary); line-height:1.7}
+@media(max-width:560px){.work-grid{grid-template-columns:1fr}}
+
+/* ヘッダーのロゴ（2026-09-16）星のマーク＋社名。
+   旧 alnair-logo-web.png は文字が ALNAIR（全部大文字）だったため差し替えた */
+.logo { gap: 10px; }
+.logo img { height: 30px; }
+.logo-name{
+  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+  font-size: 1.5rem; letter-spacing: .12em; color: var(--accent-gold); line-height: 1;
+}
+@media(max-width:560px){ .logo img{height:26px} .logo-name{font-size:1.25rem} }
+
+/* フッターの法務リンク（2026-09-20 追加） */
+.footer-links{
+    display: flex; justify-content: center; gap: 2rem;
+    flex-wrap: wrap; margin: 0 0 1.4rem;
+}
+.footer-links a{
+    font-size: 0.8rem; color: var(--text-secondary); letter-spacing: 0.12em;
+    text-decoration: none; transition: var(--transition-smooth);
+}
+.footer-links a:hover{ color: var(--accent-gold); }

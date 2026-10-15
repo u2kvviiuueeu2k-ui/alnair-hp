@@ -3,9 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alnair — AI Advisory | 恒星としてのAI戦略</title>
-    <meta name="description" content="知らないまま、終わらせない。Alnair（アルナイル）は、貴社のAI戦略を本物の光で照らす、月額制AIアドバイザリーおよびツール開発サービスです。">
-    <link rel="stylesheet" href="style.css">
+    <title>合同会社Alnair｜AIで、店と会社の“面倒”を仕組みに変える会社</title>
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <meta name="description" content="合同会社Alnairは、AIで店と会社の“面倒”を仕組みに変える会社です。AI顧問と、業務を自動化するツール・サイトの開発を行っています。">
+    <link rel="canonical" href="https://alnair-hp.webprod-alnair.workers.dev/">
+    <meta property="og:title" content="合同会社Alnair｜AIで、店と会社の“面倒”を仕組みに変える会社">
+    <meta property="og:description" content="AIで、店と会社の“面倒”を仕組みに変える会社。AI顧問と、業務を自動化するツール・サイトの開発。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://alnair-hp.webprod-alnair.workers.dev/">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "合同会社Alnair",
+      "url": "https://alnair-hp.webprod-alnair.workers.dev/",
+      "description": "AIで、店と会社の“面倒”を仕組みに変える会社"
+    }
+    </script>
+    <link rel="stylesheet" href="style.css?v=20260916">
     <!-- GSAP & Lenis -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -19,11 +39,12 @@
     <canvas id="bg-canvas"></canvas>
 
     <nav>
-        <a href="/" class="logo"><img src="alnair-logo-web.png" alt="ALNAIR"></a>
+        <a href="/" class="logo"><img src="alnair-star.png" srcset="alnair-star.png 1x, alnair-star@2x.png 2x" alt=""><span class="logo-name">Alnair</span></a>
         <div class="nav-links">
             <a href="#hero">Top</a>
             <a href="#about">About</a>
             <a href="#service">Service</a>
+            <a href="#works">Works</a>
             <a href="#company">Company</a>
             <a href="contact">Contact</a>
         </div>
@@ -62,7 +83,7 @@
                 <div class="card">
                     <p style="font-size: 0.8rem; color: var(--accent-gold); text-transform: uppercase; margin-bottom: 1rem;">Monthly Advisory</p>
                     <h3 class="card-title">月額AIアドバイザリー</h3>
-                    <p class="price">¥50,000 / 月〜</p>
+                    <p class="price">¥100,000 / 月〜</p>
                     <ul class="card-list">
                         <li>現場の課題ヒアリング</li>
                         <li>AI活用戦略の立案・提案</li>
@@ -79,15 +100,162 @@
                         <li>現場の声から課題を抽出・具現化</li>
                         <li>「こんなことできる？」からの並走型開発</li>
                         <li>予約システム・自動化ツール・HP制作</li>
-                        <li>最速1週間での納品実績</li>
                     </ul>
                 </div>
             </div>
 
             <div class="features-bar">
-                <div class="feature-item">最短1週間で納品</div>
                 <div class="feature-item">契約縛りなし</div>
             </div>
+        </section>
+
+        <section id="works">
+            <p class="section-label">Works</p>
+            <h2 style="font-size: 3rem; margin-bottom: 1rem;">すべて、実際に動きます。</h2>
+            <p style="color: var(--text-secondary); max-width: 46em; margin-bottom: 2.5rem; line-height: 2;">
+                資料ではなく、稼働している製品でご確認いただけます。<br />
+                いずれも当社が自社で開発したものです。ご登録・インストールは不要です。
+            </p>
+            <style>
+                .work-cat{display:flex;align-items:baseline;gap:1rem;flex-wrap:wrap;margin:2.8rem 0 1.15rem;}
+                .work-cat:first-of-type{margin-top:1.4rem;}
+                .work-cat .jp{font-size:1.15rem;font-weight:500;letter-spacing:.06em;color:var(--text-primary);}
+                .work-cat .en{font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-gold);}
+                .work-cat::after{content:"";flex:1;min-width:2rem;height:1px;background:var(--glass-border);align-self:center;}
+            </style>
+
+            <div class="work-cat"><span class="jp">店舗の予約・集客</span><span class="en">Booking</span></div>
+            <div class="work-grid">
+                <a class="work-card" href="https://alnair-salon-demo.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">美容室の予約管理</span>
+                    <span class="work-sub">予約・カルテ・前日連絡を1つの台帳で</span>
+                </a>
+                <a class="work-card" href="https://alnair-restaurant-demo.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">飲食店の予約・集客</span>
+                    <span class="work-sub">席・人数・電話予約と無断キャンセル対策</span>
+                </a>
+            </div>
+
+            <div class="work-cat"><span class="jp">書類・OCR</span><span class="en">Documents</span></div>
+            <div class="work-grid">
+                <a class="work-card" href="https://alnair-ocr-verify.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">帳票OCRの検算</span>
+                    <span class="work-sub">請求書なら人が見る項目を4分の1に</span>
+                </a>
+            </div>
+
+            <div class="work-cat"><span class="jp">採用・人事</span><span class="en">Recruiting</span></div>
+            <div class="work-grid">
+                <a class="work-card" href="https://alnair-recruit-demo.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">採用ファネル分析</span>
+                    <span class="work-sub">応募から定着まで7つの切り口で</span>
+                </a>
+            </div>
+
+            <div class="work-cat"><span class="jp">建築・不動産</span><span class="en">Construction &amp; Estate</span></div>
+            <div class="work-grid">
+                <a class="work-card" href="https://alnair-mitsumori-demo.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">建築・リフォーム見積</span>
+                    <span class="work-sub">現調写真と図面から見積の下書き</span>
+                </a>
+                <a class="work-card" href="https://alnair-madori-zukai.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">間取り図の方角図解</span>
+                    <span class="work-sub">図面から方角・日当たり・水回りを図解</span>
+                </a>
+                <a class="work-card" href="https://noble-estate.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">不動産サイト見本</span>
+                    <span class="work-sub">NOBLE ESTATE（架空）</span>
+                </a>
+                <a class="work-card" href="https://demo-reform.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">リフォームサイト見本</span>
+                    <span class="work-sub">REFORM CRAFT（架空）</span>
+                </a>
+            </div>
+
+            <div class="work-cat"><span class="jp">AI接客・チャット</span><span class="en">Assistant</span></div>
+            <div class="work-grid">
+                <a class="work-card" href="https://portfolio-site.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">AI接客チャット／社内FAQ／日報自動生成／集客診断</span>
+                    <span class="work-sub">4機能を1画面でご確認いただけます</span>
+                </a>
+                <a class="work-card" href="https://alnair-interior.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">インテリアAI</span>
+                    <span class="work-sub">空室写真1枚から、AIが家具を配置します</span>
+                </a>
+                <a class="work-card" href="https://alnair-vstreamer.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">ライブコマース</span>
+                    <span class="work-sub">AIアバターが商品を紹介し続けます</span>
+                </a>
+            </div>
+
+            <div class="work-cat"><span class="jp">業種別サイト見本</span><span class="en">Site Samples</span></div>
+            <div class="work-grid">
+                <a class="work-card" href="https://lumiere-salon.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">美容室</span>
+                    <span class="work-sub">Lumière</span>
+                </a>
+                <a class="work-card" href="https://yawara-seikotsu.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">整骨院</span>
+                    <span class="work-sub">やわら整骨院</span>
+                </a>
+                <a class="work-card" href="https://mirai-tax.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">税理士・士業</span>
+                    <span class="work-sub">みらい税理士事務所</span>
+                </a>
+                <a class="work-card" href="https://maison-koti.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">カフェ・飲食</span>
+                    <span class="work-sub">MAISON KOTI</span>
+                </a>
+                <a class="work-card" href="https://demo-dental.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">DEMO</span>
+                    <span class="work-title">歯科</span>
+                    <span class="work-sub">DEMO DENTAL</span>
+                </a>
+            </div>
+
+            <p style="color: var(--text-secondary); margin: 3rem 0 1.2rem; font-size: 0.9rem; letter-spacing: 0.08em;">
+                納入実績
+            </p>
+            <div class="work-grid">
+                <a class="work-card" href="https://bhawana-restaurant-hp.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">納入</span>
+                    <span class="work-title">Bhawana ／ バワナ</span>
+                    <span class="work-sub">飲食店のホームページ</span>
+                </a>
+                <a class="work-card" href="https://skyhawks-ikuseikai.webprod-alnair.workers.dev/" target="_blank" rel="noopener">
+                    <span class="work-badge">納入</span>
+                    <span class="work-title">SKY HAWKS 育成会</span>
+                    <span class="work-sub">スポーツ育成チームのホームページ</span>
+                </a>
+            </div>
+            <p style="margin-top: 2.5rem;">
+                <a href="https://alnair-portfolio.webprod-alnair.workers.dev/" target="_blank" rel="noopener"
+                   style="display:inline-flex; align-items:center; gap:.7em; padding:1rem 2rem;
+                          border:1px solid var(--accent-gold); border-radius:2px;
+                          color:var(--accent-gold); text-decoration:none; letter-spacing:.08em;
+                          transition:var(--transition-smooth);">
+                    すべての製品デモを見る
+                    <span aria-hidden="true">&#8594;</span>
+                </a>
+                <span style="display:block; margin-top:.9rem; color:var(--text-secondary); font-size:.9rem;">
+                    店舗の予約・集客、帳票OCR、採用分析、建築見積など、使いどころ別に一覧できます。
+                </span>
+            </p>
         </section>
 
         <section id="company">
@@ -142,13 +310,18 @@
         <section id="contact" style="text-align: center;">
             <h2 style="font-size: 4rem; margin-bottom: 2rem;">Let's Connect.</h2>
             <p style="color: var(--text-secondary); margin-bottom: 3rem;">
-                新しい可能性を、一緒に見つけましょう。
+                まずは、現場の課題をお聞かせください。
             </p>
             <a href="contact" class="cta-button" style="padding: 1.5rem 4rem; font-size: 1.2rem;">お問い合わせはこちら</a>
         </section>
     </main>
 
     <footer style="padding: 4rem 10%; text-align: center; border-top: 1px solid var(--glass-border);">
+        <div class="footer-links">
+            <a href="https://alnair-legal.webprod-alnair.workers.dev/">利用規約</a>
+            <a href="https://alnair-legal.webprod-alnair.workers.dev/#slo">サービスレベル目標</a>
+            <a href="https://alnair-legal.webprod-alnair.workers.dev/#incident">障害発生時対応方針</a>
+        </div>
         <p style="font-size: 0.8rem; color: var(--text-secondary); letter-spacing: 0.2em;">&copy; 2026 合同会社Alnair. ALL RIGHTS RESERVED.</p>
     </footer>
 
